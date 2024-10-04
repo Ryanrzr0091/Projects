@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.collections.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import java.lang.*?>
+
+<VBox stylesheets="@style/style.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.au.cpsc.module7.FinanceController">
+    <MenuBar>
+        <Menu text="Menu">
+            <MenuItem accelerator="CTRL+S" onAction="#saveData" text="Save" />
+            <MenuItem accelerator="CTRL+L" onAction="#loadData" text="Load" />
+            <MenuItem accelerator="CTRL+T" onAction="#showTotals" text="Show Totals" />
+        </Menu>
+    </MenuBar>
+
+    <GridPane hgap="10" vgap="10" style="-fx-pref-width: 400px;">
+        <Label text="Income:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+        <TextField fx:id="incomeField" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+
+        <Label text="Category:" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+        <ComboBox fx:id="incomeCategoryComboBox" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <items>
+                <FXCollections fx:factory="observableArrayList">
+                    <String fx:value="Primary Job" />
+                    <String fx:value="Rental Properties" />
+                    <String fx:value="YouTube Channel" />
+                </FXCollections>
+            </items>
+        </ComboBox>
+
+        <Button onAction="#addIncome" text="Add Income" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+    </GridPane>
+
+    <GridPane hgap="10" vgap="10" style="-fx-pref-width: 450px;">
+        <Label text="Expense:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+        <TextField fx:id="expenseField" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+
+        <Label text="Category:" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+        <ComboBox fx:id="expenseCategoryComboBox" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <items>
+                <FXCollections fx:factory="observableArrayList">
+                    <String fx:value="Mortgage" />
+                    <String fx:value="Power" />
+                    <String fx:value="Water" />
+                    <String fx:value="Auto" />
+                    <String fx:value="Groceries" />
+                    <String fx:value="Entertainment" />
+                    <String fx:value="Education" />
+                    <String fx:value="Personal" />
+                    <String fx:value="Medical" />
+                </FXCollections>
+            </items>
+        </ComboBox>
+
+        <Button onAction="#addExpense" text="Add Expense" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+    </GridPane>
+
+    <Label fx:id="totalIncomeLabel" text="Total Income: $0.00" />
+    <Label fx:id="totalExpenseLabel" text="Total Expense: $0.00" />
+    <Label fx:id="balanceLabel" text="Balance: $0.00" />
+
+    <TableView fx:id="transactionsTableView" onMouseClicked="#selectTransaction">
+        <columns>
+            <TableColumn fx:id="typeColumn" text="Type" />
+            <TableColumn fx:id="amountColumn" text="Amount" />
+            <TableColumn fx:id="categoryColumn" text="Category" />
+            <TableColumn fx:id="dateColumn" text="Date" />
+        </columns>
+    </TableView>
+    <HBox spacing="10" alignment="BOTTOM_LEFT">
+        <Button onAction="#deleteTransaction" text="Delete Entry" />
+    </HBox>
+</VBox>

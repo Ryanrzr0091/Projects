@@ -1,0 +1,33 @@
+services:
+  db:
+    image: mariadb:10.11
+    environment:
+      MARIADB_ROOT_PASSWORD: example
+      MARIADB_DATABASE: neptune
+    volumes:
+      - db_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-pexample"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile     # <-- Dockerfile is in the Proj5 root
+    ports:
+      - "8080:80"
+    environment:
+      DB_HOST: db
+      DB_USER: root
+      DB_PASS: example
+      DB_NAME: neptune
+    volumes:
+      - .:/var/www/html:delegated
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  db_data:

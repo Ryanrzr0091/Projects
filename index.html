@@ -19,7 +19,7 @@
       --text: #e6eefc;          /* primary text */
       --muted: #b3c1d7;         /* secondary text */
       --accent: #22d3ee;        /* neon cyan */
-      --accent-2: #60a5fa;      
+      --accent-2: #60a5fa;      /* blue accent instead of purple */      /* soft violet */
       --accent-3: #00ffa8;      /* green mint */
       --line: #1e2a3d;          /* borders */
       --shadow: 0 10px 30px rgba(0,0,0,.45), inset 0 0 0 1px rgba(255,255,255,.03);
@@ -164,6 +164,32 @@
     /* Small touches */
     .divider { height: 1px; background: linear-gradient(to right, transparent, var(--line), transparent); margin: 24px 0; }
     .tag { display:inline-block; font-size:.8rem; padding:4px 8px; border-radius: 8px; border:1px solid var(--line); background:rgba(255,255,255,.03); margin-right:6px; }
+      /* ----------------------
+       Mobile tweaks
+    -----------------------*/
+    .menu-toggle { display: none; align-items: center; justify-content: center; border: 1px solid var(--line); background: rgba(255,255,255,.04); border-radius: 10px; padding: 8px; }
+
+    @media (max-width: 720px) {
+      .nav { position: relative; gap: 10px; }
+      .brand { font-size: 1rem; }
+      .menu-toggle { display: inline-flex; }
+      .spacer { display: none; }
+      .links { display: none; position: absolute; top: 56px; left: 10px; right: 10px; background: rgba(11,15,20,.95); border: 1px solid var(--line); border-radius: 14px; padding: 10px; box-shadow: var(--shadow); }
+      header.nav-open .links { display: grid; grid-auto-rows: min-content; gap: 8px; }
+      .links a { padding: 10px 12px; border-radius: 10px; background: rgba(255,255,255,.02); }
+      .links a.btn { justify-content: center; }
+
+      main { padding: 24px 14px 64px; }
+      .hero { grid-template-columns: 1fr; gap: 16px; }
+      .hero > * { min-width: 0; }
+      .hero-card { padding: 20px; }
+      .hero h1 { font-size: clamp(1.6rem, 7vw, 2.2rem); }
+      .pillbar { gap: 8px; }
+
+      .grid { grid-template-columns: 1fr; }
+      .card { padding: 16px; }
+      footer { padding: 20px 14px 56px; }
+    }
   </style>
 </head>
 <body>
@@ -172,12 +198,21 @@
 
   <header>
     <nav class="nav">
+      <button class="menu-toggle" aria-label="Open menu" aria-expanded="false">
+        <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z"/></svg>
+      </button>
       <div class="brand">Ryan Rogers</div>
       <div class="spacer"></div>
-      <a href="#projects">Projects</a>
-      <a href="#skills">Skills</a>
-      <a href="#about">About</a>
-      <a href="#contact">Contact</a>
+      <div class="links">
+        <a href="#projects">Projects</a>
+        <a href="#skills">Skills</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+        <a class="btn" href="./RRogersResume.pdf" title="Download résumé">
+          <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M12 16l4-5h-3V4h-2v7H8l4 5zm-7 2h14v2H5v-2z"/></svg>
+          Résumé
+        </a>
+      </div>
     </nav>
   </header>
 
@@ -211,9 +246,12 @@
       </div>
       <aside class="hero-aside">
         <div class="badge">
-          <div class="eyebrow">Echo Reimagined</div>
-          <div><strong>Echo 2.0</strong> — I'll be transforming my failed ESP32 robot to a Raspberry Pi Zero + HC‑SR04 scanning rig with servo sweep 
-            and distance plotting. It will become my own little ultrasonic radar. <span class="tag">Embedded</span> <span class="tag">Robotics</span></div>
+          <div class="eyebrow">Currently working on</div>
+          <div><strong>Project Neptune</strong> — a naval readiness dashboard (MySQL + PHP/JSON API + visual GO/NO‑GO). <span class="tag">DB design</span> <span class="tag">Data viz</span></div>
+        </div>
+        <div class="badge">
+          <div class="eyebrow">Hardware play</div>
+          <div><strong>Echo</strong> — Raspberry Pi Zero + HC‑SR04 scanning rig with servo sweep and distance plotting. <span class="tag">Embedded</span> <span class="tag">Robotics</span></div>
         </div>
       </aside>
     </section>
@@ -227,7 +265,7 @@
           <h3>Jet Trip Tracker</h3>
           <p class="muted">Full‑stack flight logger and 3D globe visualization (PHP, JS, Globe.gl/Three.js). Users create accounts, log flights, and see animated paths; mileage computed with the Haversine formula.</p>
           <p>
-            <a class="btn" href="https://github.com/Ryanrzr0091/Projects/Jet Trip Tracker" target="_blank" rel="noopener">View Repo</a>
+            <a class="btn" href="https://github.com/rzr0091" target="_blank" rel="noopener">View Repo</a>
           </p>
         </article>
         <article class="card span-6">
@@ -235,7 +273,7 @@
           <h3>Project Neptune — Fleet Readiness</h3>
           <p class="muted">Web app simulating a naval readiness console (PHP, MySQL, Ajax/JSON). Normalized schema + PHP API -> live status rings and asset panels for carriers, destroyers, submarines, and aircraft without page reloads.</p>
           <p>
-            <a class="btn" href="https://github.com/Ryanrzr0091/Projects/Project Neptune" target="_blank" rel="noopener">View Repo</a>
+            <a class="btn" href="https://github.com/rzr0091" target="_blank" rel="noopener">View Repo</a>
           </p>
         </article>
         <article class="card span-6">
@@ -243,12 +281,32 @@
           <h3>Echo — ESP32 Robot</h3>
           <p class="muted">Low‑cost autonomous car using ESP32 + PCA9685 motor HAT + dual HC‑SR04 sensors. C/C++ collision‑avoidance with I²C motor control and modular design for future upgrades.</p>
           <p>
-            <a class="btn" href="https://github.com/Ryanrzr0091/Projects/Echo" target="_blank" rel="noopener">View Repo</a>
+            <a class="btn" href="https://github.com/rzr0091" target="_blank" rel="noopener">View Repo</a>
           </p>
         </article>
       </div>
     </section>
 
+    <!-- Finance Tracker Project -->
+    <section id="finance-tracker">
+      <h2 class="section-title">Finance Tracker Application</h2>
+      <div class="card">
+        <p class="muted">A lightweight, persistent desktop tool that tracks income and expenses for young professionals. Built with <strong>Java, FXML, and CSS</strong>, it demonstrates clean UI design and real‑time data handling without external dependencies. Users can add income and expenses, view summaries, manage transaction history, and save or load data across sessions.</p>
+        <p>
+          <a class="btn" href="https://github.com/rzr0091/projects/tree/main/Personal%20Finance%20Tracker" target="_blank" rel="noopener">View Repo</a>
+          <a class="btn" href="https://rzr0091.github.io/projects/Personal%20Finance%20Tracker/" target="_blank" rel="noopener">Live Demo</a>
+        </p>
+        <article class="card span-6">
+          <div class="eyebrow">Desktop / Java</div>
+          <h3>Finance Tracker Application</h3>
+          <p class="muted">Lightweight, persistent desktop tool to manage income and expenses. Built with <strong>Java, FXML, and CSS</strong> to demonstrate clean UI design and real-time data handling. Users can add income and expenses, view summaries, track transaction history, and save or load data across sessions.</p>
+          <p>
+            <a class="btn" href="https://github.com/rzr0091/projects/tree/main/Personal%20Finance%20Tracker" target="_blank" rel="noopener">View Repo</a>
+            <a class="btn" href="https://rzr0091.github.io/projects/Personal%20Finance%20Tracker/" target="_blank" rel="noopener">Live Demo</a>
+          </p>
+        </article>
+      </div>
+    </section>
     <!-- SKILLS -->
     <section id="skills">
       <h2 class="section-title">Skills</h2>
@@ -272,8 +330,7 @@
     <section id="about">
       <h2 class="section-title">About</h2>
       <div class="card">
-        <p>Auburn Computer Science student (May 2026). Former refinery operator and API‑570 inspector turned software builder. 
-            I bring systems thinking, visual problem‑solving, and hands‑on prototyping to embedded and data‑driven projects.</p>
+        <p>Auburn Computer Science student (May 2026). Former refinery operator and API‑570 inspector turned software builder. I bring systems thinking, visual problem‑solving, and hands‑on prototyping to embedded and data‑driven projects.</p>
       </div>
     </section>
 
@@ -305,6 +362,12 @@
           </a>
         </p>
       </div>
+    </section>
+
+    <!-- RESUME ANCHOR (replace with your file) -->
+    <section id="resume">
+      <div class="divider"></div>
+      <div class="muted">Drop your PDF in the repo and link it in the header button.</div>
     </section>
   </main>
 
@@ -348,12 +411,15 @@
   </section>
 
   <footer>
-    <div>© <span id="year"></span> Ryan Rogers • Built for GitHub Pages</div>
+    <div>© <span id="year"></span> Broschefski • Built for GitHub Pages</div>
   </footer>
 
   <script>
     // set current year
     document.getElementById('year').textContent = new Date().getFullYear();
-  </script>
+    // mobile nav toggle
+    const headerEl = document.querySelector('header');
+    const toggleBtn = document.querySelector('.menu-toggle');
+    const linksEl = document.query
 </body>
 </html>

@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Broschefski • Portfolio</title>
+  <meta name="description" content="Portfolio of a Computer Science student focusing on embedded systems, systems programming, and full‑stack projects." />
+  
+  <!-- Techy aesthetic with a dark, neon‑accented theme. No build tools needed. All in one file. -->
+  <style>
+    /* ----------------------
+       THEME VARIABLES
+       Tweak these to reskin the site fast.
+    -----------------------*/
+    :root {
+      --bg: #0b0f14;            /* base background */
+      --panel: rgba(17, 23, 34, .65); /* glass panels */
+      --card: rgba(22, 30, 44, .75);
+      --text: #e6eefc;          /* primary text */
+      --muted: #b3c1d7;         /* secondary text */
+      --accent: #22d3ee;        /* neon cyan */
+      --accent-2: #60a5fa;      
+      --accent-3: #00ffa8;      /* green mint */
+      --line: #1e2a3d;          /* borders */
+      --shadow: 0 10px 30px rgba(0,0,0,.45), inset 0 0 0 1px rgba(255,255,255,.03);
+      --radius: 18px;
+    }
+    
+    /* Optional: quick switch to Auburn-esque palette
+       Uncomment to hint at Auburn while staying "techy"
+    
+    :root{
+      --accent:#ff6b35;   
+      --accent-2:#4f46e5; 
+      --accent-3:#00ffa8; 
+    }
+    */
+
+    /* --------------
+       Base reset
+    ---------------*/
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      color: var(--text); background: var(--bg); line-height: 1.6;
+      min-height: 100dvh; overflow-x: hidden;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    img { max-width: 100%; height: auto; display: block; }
+    
+    /* ----------------------
+       Futuristic grid backdrop
+    -----------------------*/
+    .backdrop {
+      position: fixed; inset: 0; z-index: -1;
+      background:
+        radial-gradient(60vmax 60vmax at 10% 10%, rgba(34,211,238,.085), transparent 60%),
+        radial-gradient(60vmax 60vmax at 90% 20%, rgba(167,139,250,.085), transparent 60%),
+        radial-gradient(60vmax 60vmax at 50% 100%, rgba(0,255,168,.08), transparent 60%),
+        linear-gradient( to bottom, rgba(255,255,255,.04), rgba(255,255,255,0) 20% ),
+        repeating-linear-gradient(
+          to right,
+          rgba(255,255,255,.06) 0 1px,
+          transparent 1px 120px
+        ),
+        repeating-linear-gradient(
+          to bottom,
+          rgba(255,255,255,.06) 0 1px,
+          transparent 1px 120px
+        );
+      filter: saturate(115%);
+    }
+    
+    
+      100% { transform: translateY(600%); }
+    }
+
+    /* ----------------------
+       Shell layout
+    -----------------------*/
+    header {
+      position: sticky; top: 0; z-index: 30;
+      backdrop-filter: blur(8px); background: linear-gradient(to bottom, rgba(11,15,20,.85), transparent);
+      border-bottom: 1px solid var(--line);
+    }
+    .nav {
+      max-width: 1100px; margin: 0 auto; padding: 14px 20px; display: flex; align-items: center; gap: 18px;
+    }
+    .brand { font-weight: 700; letter-spacing: .3px; font-size: 1.05rem; color: var(--text); }
+    .spacer { flex: 1; }
+    .nav a { color: var(--muted); padding: 8px 10px; border-radius: 10px; }
+    .nav a:hover { color: var(--text); background: rgba(255,255,255,.05); text-decoration: none; }
+
+    main { max-width: 1100px; margin: 0 auto; padding: 40px 20px 80px; }
+
+    /* ----------------------
+       Hero
+    -----------------------*/
+    .hero {
+      display: grid; grid-template-columns: 1.3fr 1fr; gap: 28px; align-items: center; margin-top: 18px; 
+    }
+    .hero-card {
+      background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow);
+      padding: 28px; position: relative; overflow: hidden;
+    }
+    .hero h1 {
+      margin: 0 0 10px; font-size: clamp(2rem, 4vw, 3rem); line-height: 1.12;
+      letter-spacing: .2px;
+    }
+    .kicker { color: var(--accent); font-weight: 700; letter-spacing: .3px; }
+    .hero p { color: var(--muted); margin: 12px 0 20px; }
+    .pillbar { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+    .pill {
+      border: 1px solid var(--line); background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      padding: 8px 12px; border-radius: 999px; font-size: .9rem; color: var(--text);
+      display: inline-flex; align-items: center; gap: 8px;
+    }
+    .pill svg { width: 16px; height: 16px; opacity: .9; }
+
+    .hero-aside {
+      display: grid; gap: 18px;
+    }
+    .badge {
+      background: linear-gradient(180deg, rgba(34,211,238,.12), rgba(167,139,250,.05));
+      border: 1px solid var(--line); border-radius: var(--radius); padding: 16px 18px; box-shadow: var(--shadow);
+      color: var(--muted); font-size: .95rem;
+    }
+
+    /* ----------------------
+       Sections
+    -----------------------*/
+    section { margin-top: 48px; }
+    .section-title { font-size: 1.6rem; margin: 0 0 14px; }
+    .grid {
+      display: grid; gap: 18px; grid-template-columns: repeat(12, 1fr);
+    }
+    .card {
+      grid-column: span 12; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px; box-shadow: var(--shadow);
+      transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+    }
+    .card:hover { transform: translateY(-2px); border-color: rgba(34,211,238,.35); box-shadow: 0 10px 40px rgba(0,0,0,.55), 0 0 0 1px rgba(34,211,238,.25) inset; }
+
+    /* 2-up, 3-up at wider screens */
+    @media (min-width: 720px) { .span-6 { grid-column: span 6; } }
+    @media (min-width: 980px) { .span-4 { grid-column: span 4; } }
+
+    .muted { color: var(--muted); }
+    .eyebrow { font-size: .85rem; letter-spacing: .4px; color: var(--accent-2); text-transform: uppercase; }
+
+    .btn {
+      display: inline-flex; align-items: center; gap: 10px; border: 1px solid var(--line);
+      padding: 10px 14px; border-radius: 12px; background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.02));
+      color: var(--text); text-decoration: none; font-weight: 600;
+    }
+    .btn:hover { border-color: rgba(34,211,238,.35); text-decoration: none; }
+
+    /* ----------------------
+       Footer
+    -----------------------*/
+    footer { margin-top: 64px; padding: 28px 20px 64px; color: var(--muted); text-align: center; border-top: 1px solid var(--line); }
+
+    /* Small touches */
+    .divider { height: 1px; background: linear-gradient(to right, transparent, var(--line), transparent); margin: 24px 0; }
+    .tag { display:inline-block; font-size:.8rem; padding:4px 8px; border-radius: 8px; border:1px solid var(--line); background:rgba(255,255,255,.03); margin-right:6px; }
+  </style>
+</head>
+<body>
+  <div class="backdrop"></div>
+  
+
+  <header>
+    <nav class="nav">
+      <div class="brand">Ryan Rogers</div>
+      <div class="spacer"></div>
+      <a href="#projects">Projects</a>
+      <a href="#skills">Skills</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <main>
+    <!-- HERO -->
+    <section class="hero" id="top">
+      <div class="hero-card">
+        <div class="kicker">Embedded‑minded • Security+ • Systems‑curious</div>
+        <h1>Computer Science Student<br/>who ships real things</h1>
+        <p class="muted">
+          Focused on embedded software (C/C++), systems, and practical full‑stack. CompTIA Security+ (CE). I like turning napkin sketches into running code with measurable results.
+        </p>
+        <div class="pillbar" aria-label="quick facts">
+          <span class="pill" title="C/C++">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2l9 5v10l-9 5-9-5V7l9-5zm0 2.2L5 7.6v8.8l7 3.9 7-3.9V7.6l-7-3.4z"/></svg>
+            C/C++, Embedded
+          </span>
+          <span class="pill" title="Linux & Docker">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M20 7h-5V2h-6v5H4v6h5v5h6v-5h5z"/></svg>
+            Linux • Docker
+          </span>
+          <span class="pill" title="Databases">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C7 2 3 3.79 3 6v12c0 2.21 4 4 9 4s9-1.79 9-4V6c0-2.21-4-4-9-4zm0 2c4.42 0 7 .99 7 2s-2.58 2-7 2-7-.99-7-2 2.58-2 7-2zm0 16c-4.42 0-7-.99-7-2v-2c1.68 1.23 4.64 2 7 2s5.32-.77 7-2v2c0 1.01-2.58 2-7 2zm0-6c-4.42 0-7-.99-7-2V8c1.68 1.23 4.64 2 7 2s5.32-.77 7-2v4c0 1.01-2.58 2-7 2z"/></svg>
+            MySQL • SQL design
+          </span>
+          <span class="pill" title="Web stack">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M3 5h18v2H3zm0 6h18v2H3zm0 6h18v2H3z"/></svg>
+            HTML/CSS/JS
+          </span>
+        </div>
+      </div>
+      <aside class="hero-aside">
+        <div class="badge">
+          <div class="eyebrow">Echo Reimagined</div>
+          <div><strong>Echo 2.0</strong> — I'll be transforming my failed ESP32 robot to a Raspberry Pi Zero + HC‑SR04 scanning rig with servo sweep 
+            and distance plotting. It will become my own little ultrasonic radar. <span class="tag">Embedded</span> <span class="tag">Robotics</span></div>
+        </div>
+      </aside>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects">
+      <h2 class="section-title">Projects</h2>
+      <div class="grid">
+        <article class="card span-6">
+          <div class="eyebrow">Web • 3D Viz</div>
+          <h3>Jet Trip Tracker</h3>
+          <p class="muted">Full‑stack flight logger and 3D globe visualization (PHP, JS, Globe.gl/Three.js). Users create accounts, log flights, and see animated paths; mileage computed with the Haversine formula.</p>
+          <p>
+            <a class="btn" href="https://github.com/Ryanrzr0091/Projects/Jet Trip Tracker" target="_blank" rel="noopener">View Repo</a>
+          </p>
+        </article>
+        <article class="card span-6">
+          <div class="eyebrow">Systems / Data</div>
+          <h3>Project Neptune — Fleet Readiness</h3>
+          <p class="muted">Web app simulating a naval readiness console (PHP, MySQL, Ajax/JSON). Normalized schema + PHP API -> live status rings and asset panels for carriers, destroyers, submarines, and aircraft without page reloads.</p>
+          <p>
+            <a class="btn" href="https://github.com/Ryanrzr0091/Projects/Project Neptune" target="_blank" rel="noopener">View Repo</a>
+          </p>
+        </article>
+        <article class="card span-6">
+          <div class="eyebrow">Embedded</div>
+          <h3>Echo — ESP32 Robot</h3>
+          <p class="muted">Low‑cost autonomous car using ESP32 + PCA9685 motor HAT + dual HC‑SR04 sensors. C/C++ collision‑avoidance with I²C motor control and modular design for future upgrades.</p>
+          <p>
+            <a class="btn" href="https://github.com/Ryanrzr0091/Projects/Echo" target="_blank" rel="noopener">View Repo</a>
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="skills">
+      <h2 class="section-title">Skills</h2>
+      <div class="grid">
+        <div class="card span-4">
+          <div class="eyebrow">Languages</div>
+          <p>Java, C, C++, JavaScript, PHP, HTML/CSS, ARM Assembly, SQL</p>
+        </div>
+        <div class="card span-4">
+          <div class="eyebrow">Tools & Environments</div>
+          <p>Git, Docker, IntelliJ, VS Code, jGRASP</p>
+        </div>
+        <div class="card span-4">
+          <div class="eyebrow">Certifications</div>
+          <p>CompTIA Security+ CE (Oct 2023)</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about">
+      <h2 class="section-title">About</h2>
+      <div class="card">
+        <p>Auburn Computer Science student (May 2026). Former refinery operator and API‑570 inspector turned software builder. 
+            I bring systems thinking, visual problem‑solving, and hands‑on prototyping to embedded and data‑driven projects.</p>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact">
+      <h2 class="section-title">Contact</h2>
+      <div class="card">
+        <p class="muted">Best ways to reach me.</p>
+        <p>
+          <a class="btn" href="mailto:rzr0091@auburn.edu" rel="noopener">
+            <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M12 13L2 6.76V18h20V6.76L12 13zM12 11L2 4h20l-10 7z"/></svg>
+            rzr0091@auburn.edu
+          </a>
+          <a class="btn" href="tel:+12514230927" rel="noopener">
+            <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.01-.24c1.12.37 2.33.57 3.58.57a1 1 0 011 1V20a1 1 0 01-1 1C10.85 21 3 13.15 3 3a1 1 0 011-1h3.5a1 1 0 011 1c0 1.25.2 2.46.57 3.58a1 1 0 01-.24 1.01l-2.2 2.2z"/></svg>
+            (251) 423‑0927
+          </a>
+          <a class="btn" href="https://rzr0091.github.io" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M3 5h18v2H3zm0 6h18v2H3zm0 6h18v2H3z"/></svg>
+            rzr0091.github.io
+          </a>
+          <a class="btn" href="https://github.com/rzr0091" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M12 .5C5.73.5.9 5.33.9 11.6c0 4.87 3.16 9 7.55 10.45.55.1.76-.24.76-.54 0-.27-.01-1.16-.02-2.1-3.07.67-3.72-1.3-3.72-1.3-.5-1.26-1.23-1.6-1.23-1.6-1-.68.07-.67.07-.67 1.1.08 1.68 1.12 1.68 1.12.98 1.67 2.57 1.19 3.2.9.1-.71.38-1.19.69-1.46-2.45-.28-5.02-1.22-5.02-5.43 0-1.2.43-2.18 1.12-2.95-.11-.28-.49-1.41.1-2.93 0 0 .92-.3 3.02 1.13a10.5 10.5 0 015.5 0c2.1-1.43 3.02-1.13 3.02-1.13.59 1.52.21 2.65.1 2.93.69.77 1.12 1.75 1.12 2.95 0 4.22-2.58 5.14-5.03 5.41.39.33.74.97.74 1.96 0 1.41-.01 2.55-.01 2.9 0 .3.2.65.77.54 4.38-1.46 7.54-5.59 7.54-10.45C23.1 5.33 18.27.5 12 .5z"/></svg>
+            GitHub
+          </a>
+          <a class="btn" href="https://www.linkedin.com/in/ryanrogers0091/" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M6.94 8.5H3.75v11h3.19v-11zM5.35 3.5a1.86 1.86 0 100 3.72 1.86 1.86 0 000-3.72zM20.25 13.54c0-3.2-1.7-4.69-3.97-4.69-1.83 0-2.65 1.01-3.11 1.72v-1.57H10v11h3.17v-5.83c0-1.54.29-3.04 2.21-3.04 1.9 0 1.92 1.77 1.92 3.14v5.73h3.0v-6.46z"/></svg>
+            LinkedIn
+          </a>
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <section id="education" class="container">
+    <main style="max-width:1100px;margin:0 auto;padding:0 20px;">
+      <h2 class="section-title">Education</h2>
+      <div class="grid">
+        <div class="card span-6">
+          <div class="eyebrow">Auburn University</div>
+          <p class="muted">B.S. in Computer Science — May 2026</p>
+        </div>
+        <div class="card span-6">
+          <div class="eyebrow">University of South Alabama</div>
+          <p class="muted">B.A. History — May 2011 (Minor: German)</p>
+        </div>
+      </div>
+    </main>
+  </section>
+
+  <section id="experience" class="container">
+    <main style="max-width:1100px;margin:0 auto;padding:0 20px;">
+      <h2 class="section-title">Experience</h2>
+      <div class="grid">
+        <div class="card span-12">
+          <div class="eyebrow">SCI Technology, Inc. — Huntsville, AL</div>
+          <h3>Software Engineering Intern (Spring 2025)</h3>
+          <p class="muted">Designed embedded software architectures for FLRAA with SoC integration; produced designs for avionics components (hold‑up circuit, EEPROM storage) and a UART‑over‑I²C driver; applied aerospace coding standards and contributed across the SDLC; supported CH‑53K intercom testing by simplifying Fault History Log reporting.</p>
+        </div>
+        <div class="card span-12">
+          <div class="eyebrow">Chevron Corporation — Pascagoula, MS</div>
+          <h3>Operator (Sep 2015 – Mar 2023)</h3>
+          <p class="muted">Controlled and optimized refinery units via Yokogawa DCS; built real‑time analytics dashboards (PowerBI); authored technical reports; mentored 20+ staff; deep training in hydrotreating, hydrocracking, and hydrogen reforming.</p>
+        </div>
+        <div class="card span-12">
+          <div class="eyebrow">American Inspection Services — Pascagoula, MS</div>
+          <h3>API‑570 Inspector (Aug 2011 – Sep 2015)</h3>
+          <p class="muted">Performed API‑570 inspections; maintained database of 700+ piping systems; coordinated NDE (X‑Ray, UT, Phased Array); delivered comprehensive technical recommendations.</p>
+        </div>
+      </div>
+    </main>
+  </section>
+
+  <footer>
+    <div>© <span id="year"></span> Ryan Rogers • Built for GitHub Pages</div>
+  </footer>
+
+  <script>
+    // set current year
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

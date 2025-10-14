@@ -1,0 +1,3 @@
+Detroit -> Phoenix
+Phoenix -> Miami
+Billings -> Manchester

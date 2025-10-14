@@ -1,0 +1,5 @@
+Lagos -> Little Rock
+Chicago -> New York
+Dallas -> Atlanta
+San Francisco -> Atlanta
+Phoenix -> Los Angeles

@@ -1,0 +1,4 @@
+Denver -> Halifax
+Chicago -> Houston
+New York -> Los Angeles
+Phoenix -> New York

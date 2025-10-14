@@ -7,9 +7,9 @@ I started with a simple ESP32 dev board, two HC-SR04 ultrasonic sensors, a PCA96
 
 Wiring up the components went really well, and power reached all components cleanly, as seen by the screenshots below:
 
-!(images/1.jpeg)
-!(images/2.jpeg)
-!(images/3.jpeg)
+![Echo](images/1.jpeg)
+![Echo](images/2.jpeg)
+![Echo](images/3.jpeg)
 
 
 And that was when my success screeched to a halt. Through a myriad of tests and seemingly endless troubleshooting, it appears my dev board was damaged in some way. It was incapable of moving anything over I2C, much less flashing. Due to this, I am simply dropping the project here for now, until I can acquire new parts for a redesign, and try again. Echo 2.0 coming soon!

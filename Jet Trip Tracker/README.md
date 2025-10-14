@@ -1,7 +1,7 @@
 # ✈️ Jet Trip Tracker
 
 A lightweight PHP web application that lets users **log, visualize, and explore their flights in 3D**.  
-Built with **PHP**, **JavaScript (Globe.gl + Three.js)**, and **CSS**, the Jet Trip Tracker turns simple text-based data into an interactive global visualization.
+Built with **PHP**, **JavaScript (Globe.gl + Three.js)**, and **CSS**, the Jet Trip Tracker turns simple text-based data into an interactive global visualization. Visit [JTT Here!](https://fuzzy-pancake-97q95r7gq546cx6q4-8080.app.github.dev/)
 
 ---
 
@@ -30,25 +30,11 @@ Each user’s flight file is created automatically the first time they save a tr
 
 ---
 
-## 🚀 Quick Start (Run from GitHub Codespaces)
+## 🖼️ Screenshots
 
-1. On your repository page → **Code** → **Codespaces** → **Create codespace on main**  
-2. Wait for the Codespace to initialize (PHP + Apache environment)  
-3. In the **PORTS** tab, expose port **80** (set it to *public* if you want to share)  
-4. Click the URL — the site will open directly from your GitHub instance  
-
-### `.devcontainer/devcontainer.json`
-Include this file at the root of your repository:
-
-```json
-{
-  "name": "Jet Trip Tracker",
-  "image": "mcr.microsoft.com/devcontainers/php:8.2-apache-bullseye",
-  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
-  "forwardPorts": [80],
-  "postCreateCommand": "sudo rm -rf /var/www/html && sudo ln -s ${containerWorkspaceFolder} /var/www/html && apache2ctl -D FOREGROUND",
-  "portsAttributes": {
-    "80": { "label": "Jet Trip Tracker", "visibility": "public" }
-  }
-
-}
+| Screenshot | Description |
+|-------------|--------------|
+| ![Home Page](images/ss1.png) | **Home Page** shows home page. |
+| ![Login Page](images/ss2.png) | **Login screen** showing the user authentication interface. |
+| ![Dashboard](images/ss3.png) | **User dashboard** listing saved flights and travel mileage. |
+| ![3D Globe](images/ss4.png) | **3D visualization** of global flight paths. |

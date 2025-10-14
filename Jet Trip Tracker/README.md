@@ -30,9 +30,8 @@ Each user’s flight file is created automatically the first time they save a tr
 
 ---
 
-## 🚀 Quick Start (Run from GitHub)
+## 🚀 Quick Start (Run from GitHub Codespaces)
 
-### Option A — GitHub Codespaces (recommended)
 1. On your repository page → **Code** → **Codespaces** → **Create codespace on main**  
 2. Wait for the Codespace to initialize (PHP + Apache environment)  
 3. In the **PORTS** tab, expose port **80** (set it to *public* if you want to share)  
@@ -51,4 +50,5 @@ Include this file at the root of your repository:
   "portsAttributes": {
     "80": { "label": "Jet Trip Tracker", "visibility": "public" }
   }
+
 }

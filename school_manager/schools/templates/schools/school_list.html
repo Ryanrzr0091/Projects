@@ -1,0 +1,41 @@
+{% extends "schools/base.html" %}
+{% block title %}Schools{% endblock %}
+
+{% block content %}
+<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem;">
+    <h1>Schools</h1>
+    <a href="{% url 'school-create' %}" class="btn btn-primary">+ Add School</a>
+</div>
+
+{% if schools %}
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Principal</th>
+            <th>Founded</th>
+            <th>Classrooms</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for school in schools %}
+        <tr>
+            <td><a href="{% url 'school-detail' school.pk %}">{{ school.name }}</a></td>
+            <td>{{ school.principal }}</td>
+            <td>{{ school.founded }}</td>
+            <td>{{ school.classrooms.count }}</td>
+            <td>
+                <div class="actions">
+                    <a href="{% url 'school-update' school.pk %}" class="btn btn-secondary btn-sm">Edit</a>
+                    <a href="{% url 'school-delete' school.pk %}" class="btn btn-danger btn-sm">Delete</a>
+                </div>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p class="empty">No schools yet. Add one to get started.</p>
+{% endif %}
+{% endblock %}

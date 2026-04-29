@@ -1,0 +1,59 @@
+{% extends "schools/base.html" %}
+{% block title %}{{ school.name }}{% endblock %}
+
+{% block content %}
+<div class="breadcrumb"><a href="{% url 'school-list' %}">Schools</a> › {{ school.name }}</div>
+
+<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+    <h1>{{ school.name }}</h1>
+    <div class="actions">
+        <a href="{% url 'school-update' school.pk %}" class="btn btn-secondary">Edit</a>
+        <a href="{% url 'school-delete' school.pk %}" class="btn btn-danger">Delete</a>
+    </div>
+</div>
+
+<div class="card">
+    <p class="meta">Principal: {{ school.principal }}</p>
+    <p class="meta">Founded: {{ school.founded }}</p>
+    <p class="meta">Address: {{ school.address }}</p>
+</div>
+
+<div style="display:flex; justify-content:space-between; align-items:center;">
+    <h2>Classrooms</h2>
+    <a href="{% url 'classroom-create' school.pk %}" class="btn btn-primary btn-sm">+ Add Classroom</a>
+</div>
+
+{% if school.classrooms.all %}
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Subject</th>
+            <th>Teacher</th>
+            <th>Room</th>
+            <th>Students</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for classroom in school.classrooms.all %}
+        <tr>
+            <td><a href="{% url 'classroom-detail' classroom.pk %}">{{ classroom.name }}</a></td>
+            <td>{{ classroom.subject }}</td>
+            <td>{{ classroom.teacher }}</td>
+            <td>{{ classroom.room_number }}</td>
+            <td>{{ classroom.students.count }}</td>
+            <td>
+                <div class="actions">
+                    <a href="{% url 'classroom-update' classroom.pk %}" class="btn btn-secondary btn-sm">Edit</a>
+                    <a href="{% url 'classroom-delete' classroom.pk %}" class="btn btn-danger btn-sm">Delete</a>
+                </div>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p class="empty">No classrooms yet.</p>
+{% endif %}
+{% endblock %}

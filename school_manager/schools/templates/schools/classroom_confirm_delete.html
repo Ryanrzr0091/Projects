@@ -1,0 +1,21 @@
+{% extends "schools/base.html" %}
+{% block title %}Delete {{ object.name }}{% endblock %}
+
+{% block content %}
+<div class="breadcrumb">
+    <a href="{% url 'school-list' %}">Schools</a> ›
+    <a href="{% url 'school-detail' object.school.pk %}">{{ object.school.name }}</a> › {{ object.name }}
+</div>
+<h1>Delete Classroom</h1>
+
+<div class="delete-warning">
+    <p>Are you sure you want to delete <strong>{{ object.name }}</strong>? This will also delete all enrolled students.</p>
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-actions">
+            <button type="submit" class="btn btn-danger">Yes, delete</button>
+            <a href="{% url 'school-detail' object.school.pk %}" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

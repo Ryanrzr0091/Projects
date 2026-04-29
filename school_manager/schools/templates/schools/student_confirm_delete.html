@@ -1,0 +1,23 @@
+{% extends "schools/base.html" %}
+{% block title %}Delete {{ object.first_name }} {{ object.last_name }}{% endblock %}
+
+{% block content %}
+<div class="breadcrumb">
+    <a href="{% url 'school-list' %}">Schools</a> ›
+    <a href="{% url 'school-detail' object.classroom.school.pk %}">{{ object.classroom.school.name }}</a> ›
+    <a href="{% url 'classroom-detail' object.classroom.pk %}">{{ object.classroom.name }}</a> ›
+    {{ object.first_name }} {{ object.last_name }}
+</div>
+<h1>Delete Student</h1>
+
+<div class="delete-warning">
+    <p>Are you sure you want to delete <strong>{{ object.first_name }} {{ object.last_name }}</strong>?</p>
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-actions">
+            <button type="submit" class="btn btn-danger">Yes, delete</button>
+            <a href="{% url 'classroom-detail' object.classroom.pk %}" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

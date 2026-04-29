@@ -1,0 +1,64 @@
+{% extends "schools/base.html" %}
+{% block title %}{{ classroom.name }}{% endblock %}
+
+{% block content %}
+<div class="breadcrumb">
+    <a href="{% url 'school-list' %}">Schools</a> ›
+    <a href="{% url 'school-detail' classroom.school.pk %}">{{ classroom.school.name }}</a> ›
+    {{ classroom.name }}
+</div>
+
+<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+    <h1>{{ classroom.name }}</h1>
+    <div class="actions">
+        <a href="{% url 'classroom-update' classroom.pk %}" class="btn btn-secondary">Edit</a>
+        <a href="{% url 'classroom-delete' classroom.pk %}" class="btn btn-danger">Delete</a>
+    </div>
+</div>
+
+<div class="card">
+    <p class="meta">Subject: {{ classroom.subject }}</p>
+    <p class="meta">Teacher: {{ classroom.teacher }}</p>
+    <p class="meta">Room: {{ classroom.room_number }}</p>
+    <p class="meta">School: <a href="{% url 'school-detail' classroom.school.pk %}">{{ classroom.school.name }}</a></p>
+</div>
+
+<div style="display:flex; justify-content:space-between; align-items:center;">
+    <h2>Students</h2>
+    <a href="{% url 'student-create' classroom.pk %}" class="btn btn-primary btn-sm">+ Add Student</a>
+</div>
+
+{% if classroom.students.all %}
+<table>
+    <thead>
+        <tr>
+            <th>Last Name</th>
+            <th>First Name</th>
+            <th>Student ID</th>
+            <th>Email</th>
+            <th>Enrolled</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for student in classroom.students.all %}
+        <tr>
+            <td><a href="{% url 'student-detail' student.pk %}">{{ student.last_name }}</a></td>
+            <td>{{ student.first_name }}</td>
+            <td>{{ student.student_id }}</td>
+            <td>{{ student.email }}</td>
+            <td>{{ student.enrolled }}</td>
+            <td>
+                <div class="actions">
+                    <a href="{% url 'student-update' student.pk %}" class="btn btn-secondary btn-sm">Edit</a>
+                    <a href="{% url 'student-delete' student.pk %}" class="btn btn-danger btn-sm">Delete</a>
+                </div>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p class="empty">No students enrolled yet.</p>
+{% endif %}
+{% endblock %}

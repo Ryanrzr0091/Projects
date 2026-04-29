@@ -1,0 +1,27 @@
+{% extends "schools/base.html" %}
+{% block title %}{{ student.first_name }} {{ student.last_name }}{% endblock %}
+
+{% block content %}
+<div class="breadcrumb">
+    <a href="{% url 'school-list' %}">Schools</a> ›
+    <a href="{% url 'school-detail' student.classroom.school.pk %}">{{ student.classroom.school.name }}</a> ›
+    <a href="{% url 'classroom-detail' student.classroom.pk %}">{{ student.classroom.name }}</a> ›
+    {{ student.first_name }} {{ student.last_name }}
+</div>
+
+<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+    <h1>{{ student.first_name }} {{ student.last_name }}</h1>
+    <div class="actions">
+        <a href="{% url 'student-update' student.pk %}" class="btn btn-secondary">Edit</a>
+        <a href="{% url 'student-delete' student.pk %}" class="btn btn-danger">Delete</a>
+    </div>
+</div>
+
+<div class="card">
+    <p class="meta">Student ID: {{ student.student_id }}</p>
+    <p class="meta">Email: {{ student.email|default:"—" }}</p>
+    <p class="meta">Enrolled: {{ student.enrolled }}</p>
+    <p class="meta">Classroom: <a href="{% url 'classroom-detail' student.classroom.pk %}">{{ student.classroom.name }}</a></p>
+    <p class="meta">School: <a href="{% url 'school-detail' student.classroom.school.pk %}">{{ student.classroom.school.name }}</a></p>
+</div>
+{% endblock %}

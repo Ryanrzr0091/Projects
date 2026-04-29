@@ -1,0 +1,35 @@
+{% extends "schools/base.html" %}
+{% block title %}{% if object %}Edit {{ object.first_name }} {{ object.last_name }}{% else %}New Student{% endif %}{% endblock %}
+
+{% block content %}
+<div class="breadcrumb">
+    <a href="{% url 'school-list' %}">Schools</a> ›
+    {% if object %}
+    <a href="{% url 'school-detail' object.classroom.school.pk %}">{{ object.classroom.school.name }}</a> ›
+    <a href="{% url 'classroom-detail' object.classroom.pk %}">{{ object.classroom.name }}</a> ›
+    {{ object.first_name }} {{ object.last_name }}
+    {% else %}
+    New Student
+    {% endif %}
+</div>
+<h1>{% if object %}Edit Student{% else %}Add Student{% endif %}</h1>
+
+<div class="card">
+    <form method="post">
+        {% csrf_token %}
+        {% for field in form %}
+        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+        {{ field }}
+        {% if field.errors %}<p style="color:red;font-size:0.85rem;">{{ field.errors.0 }}</p>{% endif %}
+        {% endfor %}
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Save</button>
+            {% if object %}
+            <a href="{% url 'classroom-detail' object.classroom.pk %}" class="btn btn-secondary">Cancel</a>
+            {% else %}
+            <a href="{% url 'school-list' %}" class="btn btn-secondary">Cancel</a>
+            {% endif %}
+        </div>
+    </form>
+</div>
+{% endblock %}

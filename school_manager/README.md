@@ -83,7 +83,3 @@ platform ssh -- python manage.py createsuperuser
 git remote add origin https://github.com/YOUR_USERNAME/school-manager.git
 git push -u origin main
 ```
-
-Invite collaborators under Settings → Collaborators:
-- Instructor: `cdavidshaffer`
-- GTA: `shap2zj`
